@@ -1,0 +1,326 @@
+swagger: "2.0"
+info:
+  title: Tugas Mentoring 16 - API Documentation
+  description: Documentation for the API endpoints provided by https://ci3.diengdev.my.id/
+  version: 1.0.0
+host: ci3.diengdev.my.id
+basePath: /api/v1
+schemes:
+  - https
+  - http
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+tags:
+  - name: Auth
+    description: untuk melakukan otentikasi dan mendapatkan token.
+  - name: category
+    description: untuk mengelola semua kategori produk.
+  - name: Products
+    description: untuk mengelola semua produk.
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register user
+      consumes:
+        - application/x-www-form-urlencoded
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: bad request
+      parameters:
+        - in: formData
+          name: username
+          type: string
+          required: true
+        - in: formData
+          name: email
+          type: string
+          required: true
+        - in: formData
+          name: password
+          type: string
+          required: true
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login user
+      consumes:
+        - application/x-www-form-urlencoded
+      responses:
+        "200":
+          description: successful operation
+      parameters:
+        - in: formData
+          name: username
+          type: string
+          required: true
+        - in: formData
+          name: password
+          type: string
+          required: true
+  /auth/reGenToken:
+    post:
+      tags:
+        - Auth
+      summary: Re Generate user token
+      consumes:
+        - application/x-www-form-urlencoded
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: bad request
+      parameters:
+        - in: formData
+          name: username
+          type: string
+          required: true
+  /auth/logout:
+    post:
+      tags:
+        - Auth
+      summary: Logout user
+      consumes:
+        - application/x-www-form-urlencoded
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: bad request
+      parameters:
+        - in: formData
+          name: username
+          type: string
+          required: true
+        - in: formData
+          name: password
+          type: string
+          required: true
+  /category:
+    get:
+      tags:
+        - category
+      summary: Menampilkan semua kategori
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: successful operation
+        "404":
+          description: category not found
+      security:
+        - Bearer: []
+    post:
+      tags:
+        - category
+      summary: Tambah kategori
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: bad request
+      parameters:
+        - name: req body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/form_category"
+      security:
+        - Bearer: []
+  /category/{id}:
+    get:
+      tags:
+        - category
+      summary: Menampilkan detail kategori
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: bad request
+        "404":
+          description: category not found
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID kategori
+          type: integer
+      security:
+        - Bearer: []
+    put:
+      tags:
+        - category
+      summary: Memperbarui kategori
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: bad request
+        "404":
+          description: category not found
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID kategori
+          type: integer
+        - name: req body
+          in: body
+          required: true
+      security:
+        - Bearer: []
+    delete:
+      tags:
+        - category
+      summary: Menghapus kategori
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: bad request
+        "404":
+          description: category not found
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID kategori
+          type: integer
+      security:
+        - Bearer: []
+  /products:
+    get:
+      tags:
+        - Products
+      summary: Menampilkan semua produk
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: successful operation
+        "404":
+          description: product not found
+      security:
+        - Bearer: []
+    post:
+      tags:
+        - Products
+      summary: Tambah produk
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: bad request
+        "404":
+          description: product not found
+      parameters:
+        - name: req body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/form_product"
+      security:
+        - Bearer: []
+  /products/{id}:
+    get:
+      tags:
+        - Products
+      summary: Menampilkan detail produk
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: bad request
+        "404":
+          description: product not found
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID produk
+          type: integer
+      security:
+        - Bearer: []
+    put:
+      tags:
+        - Products
+      summary: Memperbarui produk
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: bad request
+        "404":
+          description: product not found
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID produk
+          type: integer
+        - name: req body
+          in: body
+          required: true
+      security:
+        - Bearer: []
+    delete:
+      tags:
+        - Products
+      summary: Menghapus produk
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: bad request
+        "404":
+          description: product not found
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID produk
+          type: integer
+      security:
+        - Bearer: []
+definitions:
+  form_product:
+    type: object
+    properties:
+      product_name:
+        type: string
+      category_id:
+        type: integer
+      price:
+        type: integer
+      quantity:
+        type: integer
+      description:
+        type: string
+  form_category:
+    type: object
+    properties:
+      category_name:
+        type: string
